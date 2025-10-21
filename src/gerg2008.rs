@@ -2350,7 +2350,7 @@ const GTIJ: [[f64; MAXFLDS + 1]; MAXFLDS + 1] = [
 /// // Compressibility factor
 /// assert!((1.175 - gerg_test.z).abs() < 1.0e-3);
 /// ```
-#[derive(Default)]
+#[derive(Debug, Default, Clone, Copy)]
 pub struct Gerg2008 {
     /// Temperature in K
     pub t: f64,

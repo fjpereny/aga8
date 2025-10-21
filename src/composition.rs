@@ -20,7 +20,7 @@
 /// assert!((air.sum() - 1.0).abs() < 1.0e-10);
 /// ```
 #[repr(C)]
-#[derive(Default)]
+#[derive(Debug, Default, Clone, Copy)]
 pub struct Composition {
     /// Methane CH<sub>4</sub>
     pub methane: f64,
