@@ -654,7 +654,7 @@ const TH0I: [[f64; 7]; MAXFLDS] = [
 /// assert!((12.807_924_036_488_01 - aga8_test.d).abs() < 1.0e-10);
 /// ```
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Clone, Copy)]
 pub struct Detail {
     // Calculated in the Pressure subroutine,
     // but not included as an argument since it
@@ -1404,5 +1404,55 @@ impl Detail {
         self.w = self.w.sqrt();
         self.kappa = self.w * self.w * mm / (rt * 1000.0 * self.z);
         self.d2p_dtd = 0.0;
+    }
+}
+
+
+mod tests {
+    use super::*;
+
+    #[test]
+    fn clone_detail() {
+        let mut detail = Detail::new();
+        let mut gas_comp = Composition::default();
+        gas_comp.nitrogen = 1.0;
+
+        _ = detail.set_composition(&gas_comp);
+        detail.t = 273.15;
+        detail.p = 200.0;
+        _ = detail.density();
+        detail.properties();
+
+        let mut detail_clone = detail.clone();
+        detail_clone.p = 100.0;
+        _ = detail_clone.density();
+        detail_clone.properties();
+        assert!((detail_clone.t - 273.15).abs() < 0.000001);
+        assert!((detail_clone.p - 100.0).abs() <  0.000001);
+
+        let expected_density = 0.0446; // mol/l STP
+        assert!((detail_clone.d - expected_density).abs() < 0.001);
+    }
+
+    fn copy_detail() {
+        let mut detail = Detail::new();
+        let mut gas_comp = Composition::default();
+        gas_comp.nitrogen = 1.0;
+
+        _ = detail.set_composition(&gas_comp);
+        detail.t = 273.15;
+        detail.p = 200.0;
+        _ = detail.density();
+        detail.properties();
+
+        let mut detail_copy = detail;
+        detail_copy.p = 100.0;
+        _ = detail_copy.density();
+        detail_copy.properties();
+        assert!((detail_copy.t - 273.15).abs() < 0.000001);
+        assert!((detail_copy.p - 100.0).abs() <  0.000001);
+
+        let expected_density = 0.0446; // mol/l STP
+        assert!((detail_copy.d - expected_density).abs() < 0.001);
     }
 }

@@ -20,7 +20,7 @@
 /// assert!((air.sum() - 1.0).abs() < 1.0e-10);
 /// ```
 #[repr(C)]
-#[derive(Debug, Default, Clone, Copy)]
+#[derive(Default, Clone, Copy)]
 pub struct Composition {
     /// Methane CH<sub>4</sub>
     pub methane: f64,
@@ -188,6 +188,8 @@ pub enum CompositionError {
 
 #[cfg(test)]
 mod tests {
+    use std::default;
+
     use super::*;
 
     #[test]
@@ -242,5 +244,31 @@ mod tests {
         };
 
         assert_eq!(comp.normalize(), Err(CompositionError::Empty));
+    }
+
+    #[test]
+    fn clone_gas_comp() {
+        let mut gas_comp = Composition {
+            argon: 50.0,
+            methane: 50.0,
+            ..Default::default()
+        };
+        let mut gas_comp_clone = gas_comp.clone();
+
+        gas_comp.argon = 0.0;
+        gas_comp_clone.normalize().unwrap();
+        assert_eq!(gas_comp_clone.argon, 0.5);
+    }
+
+        #[test]
+    fn copy_gas_comp() {
+        let gas_comp = Composition {
+            argon: 50.0,
+            methane: 50.0,
+            ..Default::default()
+        };
+        let mut gas_comp_clone = gas_comp;
+        gas_comp_clone.normalize().unwrap();
+        assert_eq!(gas_comp_clone.argon, 0.5);
     }
 }
