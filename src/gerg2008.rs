@@ -4715,7 +4715,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn clone_detail() {
+    fn clone_gerg() {
         let mut detail = Gerg2008::new();
         let mut gas_comp = Composition::default();
         gas_comp.nitrogen = 1.0;
@@ -4737,7 +4737,7 @@ mod tests {
         assert!((detail_clone.d - expected_density).abs() < 0.001);
     }
 
-    fn copy_detail() {
+    fn copy_gerg() {
         let mut detail = Gerg2008::new();
         let mut gas_comp = Composition::default();
         gas_comp.nitrogen = 1.0;
