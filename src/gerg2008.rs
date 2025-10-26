@@ -4711,6 +4711,7 @@ impl Gerg2008 {
 }
 
 
+#[cfg(test)]
 mod tests {
     use super::*;
 
@@ -4737,6 +4738,7 @@ mod tests {
         assert!((detail_clone.d - expected_density).abs() < 0.001);
     }
 
+    #[test]
     fn copy_gerg() {
         let mut detail = Gerg2008::new();
         let mut gas_comp = Composition::default();

@@ -188,8 +188,6 @@ pub enum CompositionError {
 
 #[cfg(test)]
 mod tests {
-    use std::default;
-
     use super::*;
 
     #[test]
@@ -260,7 +258,7 @@ mod tests {
         assert_eq!(gas_comp_clone.argon, 0.5);
     }
 
-        #[test]
+    #[test]
     fn copy_gas_comp() {
         let gas_comp = Composition {
             argon: 50.0,

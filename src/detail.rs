@@ -1408,6 +1408,7 @@ impl Detail {
 }
 
 
+#[cfg(test)]
 mod tests {
     use super::*;
 
@@ -1434,6 +1435,7 @@ mod tests {
         assert!((detail_clone.d - expected_density).abs() < 0.001);
     }
 
+    #[test]
     fn copy_detail() {
         let mut detail = Detail::new();
         let mut gas_comp = Composition::default();
